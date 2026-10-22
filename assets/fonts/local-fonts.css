@@ -1,0 +1,3 @@
+/* Embedded for both file:// and HTTP previews. SIL Open Font Licenses are in this directory. */
+@font-face { font-family: "Manrope"; src: url("manrope-latin.woff2") format("woff2"); font-style: normal; font-weight: 400 700; font-display: swap; }
+@font-face { font-family: "Noto Sans"; src: url("noto-sans-latin.woff2") format("woff2"); font-style: normal; font-weight: 400 700; font-display: swap; }

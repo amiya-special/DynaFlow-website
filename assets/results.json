@@ -1,0 +1,196 @@
+{
+  "backbone": "Qwen3.5-27B",
+  "datasets": [
+    {
+      "name": "AIME-2024",
+      "total": 30
+    },
+    {
+      "name": "AIME-2025",
+      "total": 30
+    },
+    {
+      "name": "AIME-2026",
+      "total": 30
+    },
+    {
+      "name": "PolyMATH-200",
+      "total": 200
+    },
+    {
+      "name": "GPQA-Diamond",
+      "total": 198
+    },
+    {
+      "name": "HotpotQA-200",
+      "total": 200
+    }
+  ],
+  "settings": [
+    {
+      "stage": "CoT",
+      "mode": null,
+      "correct": [
+        29,
+        28,
+        26,
+        166,
+        169,
+        93
+      ],
+      "total_correct": 511,
+      "total": 688,
+      "accuracy_percent": 74.27
+    },
+    {
+      "stage": "CoT-SC",
+      "mode": null,
+      "correct": [
+        27,
+        28,
+        29,
+        169,
+        170,
+        101
+      ],
+      "total_correct": 524,
+      "total": 688,
+      "accuracy_percent": 76.16
+    },
+    {
+      "stage": "Self-Refine",
+      "mode": null,
+      "correct": [
+        29,
+        28,
+        28,
+        175,
+        175,
+        96
+      ],
+      "total_correct": 531,
+      "total": 688,
+      "accuracy_percent": 77.18
+    },
+    {
+      "stage": "AFlow",
+      "mode": null,
+      "correct": [
+        28,
+        29,
+        30,
+        172,
+        173,
+        94
+      ],
+      "total_correct": 526,
+      "total": 688,
+      "accuracy_percent": 76.45
+    },
+    {
+      "stage": "Base",
+      "mode": "Direct",
+      "correct": [
+        28,
+        28,
+        28,
+        148,
+        165,
+        95
+      ],
+      "total_correct": 492,
+      "total": 688,
+      "accuracy_percent": 71.51
+    },
+    {
+      "stage": "Base + Web search",
+      "mode": null,
+      "correct": [
+        25,
+        22,
+        22,
+        132,
+        158,
+        155
+      ],
+      "total_correct": 514,
+      "total": 688,
+      "accuracy_percent": 74.71
+    },
+    {
+      "stage": "Base",
+      "mode": "Dynamic",
+      "correct": [
+        19,
+        19,
+        22,
+        128,
+        154,
+        106
+      ],
+      "total_correct": 448,
+      "total": 688,
+      "accuracy_percent": 65.12
+    },
+    {
+      "stage": "Base",
+      "mode": "Forced",
+      "correct": [
+        23,
+        21,
+        21,
+        140,
+        154,
+        163
+      ],
+      "total_correct": 522,
+      "total": 688,
+      "accuracy_percent": 75.87
+    },
+    {
+      "stage": "DynaFlow",
+      "mode": "Direct",
+      "correct": [
+        28,
+        27,
+        27,
+        174,
+        172,
+        103
+      ],
+      "total_correct": 531,
+      "total": 688,
+      "accuracy_percent": 77.18
+    },
+    {
+      "stage": "DynaFlow",
+      "mode": "Dynamic",
+      "correct": [
+        28,
+        30,
+        29,
+        183,
+        166,
+        169
+      ],
+      "total_correct": 605,
+      "total": 688,
+      "accuracy_percent": 87.94
+    },
+    {
+      "stage": "DynaFlow",
+      "mode": "Forced",
+      "correct": [
+        30,
+        30,
+        30,
+        181,
+        168,
+        167
+      ],
+      "total_correct": 606,
+      "total": 688,
+      "accuracy_percent": 88.08
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="DynaFlow: Learning Free-Form Multi-Agent Orchestration. Runtime and evaluation code for a main agent that writes and executes task-specific multi-agent workflows.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="DynaFlow: Learning Free-Form Multi-Agent Orchestration">
+  <meta property="og:description" content="A Main Agent that learns when and how to write multi-agent workflows as code. 88.1% on six benchmarks with Qwen3.5-27B, +10.9 points over the strongest baseline.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://amiya-special.github.io/DynaFlow-website/">
+  <meta property="og:image" content="https://amiya-special.github.io/DynaFlow-website/assets/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" hreflang="en" href="index.html">
+  <link rel="alternate" hreflang="zh-CN" href="zh.html">
+  <title>DynaFlow · Learning Free-Form Multi-Agent Orchestration</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="assets/fonts/local-fonts.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/editorial.css">
+  <script defer src="assets/config.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#introduction">Skip to content</a>
+  <header class="topbar">
+    <a class="wordmark" href="#top"><img src="assets/logo.svg" alt="" width="25" height="25">DynaFlow</a>
+    <nav aria-label="Main navigation"><a href="#method">Method</a><a href="#cases">Cases</a><a href="#results">Results</a><a href="#code">Code</a></nav>
+    <div class="lang-toggle" role="group" aria-label="Language"><a href="index.html" lang="en" hreflang="en" aria-current="page" data-lang-link>EN</a><a href="zh.html" lang="zh-CN" hreflang="zh-CN" data-lang-link>中文</a></div>
+    <button class="menu-button" id="menu-toggle" aria-label="Open table of contents" aria-controls="contents" aria-expanded="false">☰</button>
+  </header>
+  <dialog id="contents" aria-labelledby="contents-title"><div class="dialog-head"><h2 id="contents-title">On this page</h2><button class="close-button" id="menu-close" aria-label="Close table of contents">×</button></div><nav aria-label="Table of contents"><a href="#introduction">Introduction</a><a href="#method">DynaFlow framework</a><a href="#cases">Case studies</a><a href="#results">Experimental results</a><a href="#analysis">Workflow analysis</a><a href="#code">Code</a><a href="#citation" data-citation-link>Citation</a><a href="zh.html" lang="zh-CN" hreflang="zh-CN" data-lang-link>中文版</a></nav></dialog>
+  <main id="top">
+    <section class="hero container">
+      <div class="eyebrow">DYNAMIC MULTI-AGENT WORKFLOWS</div>
+      <h1><img src="assets/logo.svg" alt="" width="80" height="80"><span>Dyna<span class="accent">Flow</span></span></h1>
+      <h2 class="subtitle" id="project-subtitle">Learning Free-Form<br>Multi-Agent Orchestration</h2>
+      <p class="authors" id="project-authors" hidden></p>
+      <p class="affiliations" id="project-affiliations" hidden></p>
+      <p class="hero-summary">Task-Specific Collaboration by Design.<br><span>Generate, execute, and refine multi-agent workflows as code.</span></p>
+      <div class="resource-links" aria-label="Project resources">
+        <a class="resource resource-public" data-resource="github" href="https://github.com/amiya-special/Dynaflow" target="_blank" rel="noopener noreferrer"><svg class="resource-icon brand-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg> GitHub</a>
+        <a class="resource resource-public" data-resource="arxiv" role="link" aria-disabled="true"><svg class="resource-icon brand-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3.8423 0a1.0037 1.0037 0 0 0-.922.6078c-.1536.3687-.0438.6275.2938 1.1113l6.9185 8.3597-1.0223 1.1058a1.0393 1.0393 0 0 0 .003 1.4229l1.2292 1.3135-5.4391 6.4444c-.2803.299-.4538.823-.2971 1.1986a1.0253 1.0253 0 0 0 .9585.635.9133.9133 0 0 0 .6891-.3405l5.783-6.126 7.4902 8.0051a.8527.8527 0 0 0 .6835.2597.9575.9575 0 0 0 .8777-.6138c.1577-.377-.017-.7502-.306-1.1407l-7.0518-8.3418 1.0632-1.13a.9626.9626 0 0 0 .0089-1.3165L4.6336.4639s-.3733-.4535-.768-.463zm0 .272h.0166c.2179.0052.4874.2715.5644.3639l.005.006.0052.0055 10.169 10.9905a.6915.6915 0 0 1-.0072.945l-1.0666 1.133-1.4982-1.7724-8.5994-10.39c-.3286-.472-.352-.6183-.2592-.841a.7307.7307 0 0 1 .6704-.4401Zm14.341 1.5701a.877.877 0 0 0-.6554.2418l-5.6962 6.1584 1.6944 1.8319 5.3089-6.5138c.3251-.4335.479-.6603.3247-1.0292a1.1205 1.1205 0 0 0-.9763-.689zm-7.6557 12.2823 1.3186 1.4135-5.7864 6.1295a.6494.6494 0 0 1-.4959.26.7516.7516 0 0 1-.706-.4669c-.1119-.2682.0359-.6864.2442-.9083l.0051-.0055.0047-.0055z"/></svg> arXiv <small>Coming soon</small></a>
+        <a class="resource resource-primary" href="#code"><svg class="resource-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/></svg> Code</a>
+        <a class="resource" href="#cases"><svg class="resource-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> Case studies</a>
+        <a class="resource" href="#citation" data-citation-link><svg class="resource-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 5H4v7h5c0 4-2 6-5 7m16-14h-6v7h5c0 4-2 6-5 7"/></svg> Cite</a>
+      </div>
+      <figure class="paper-figure hero-paper-figure">
+          <a class="figure-open" href="assets/paper/fig2-overview.png" data-figure-zoom aria-label="Enlarge figure: Overview of DynaFlow"><img src="assets/paper/fig2-overview.png" width="2200" height="792" loading="eager" decoding="async" alt="DynaFlow overview in four panels: trajectory learning with two-stage SFT, the Main Agent choosing an answer, tool call or JavaScript workflow, frozen sub-agents executing research, reasoning and verification, and results feeding back; Forced accuracy rises from 75.87 (Base) to 85.47 (Stage 1) and 88.08 (DynaFlow)."></a>
+          <figcaption><strong>Overview of DynaFlow.</strong> Only the Main Agent is trained. It answers directly, calls a tool, or writes a JavaScript workflow; frozen sub-agents execute it, and the outputs and trace inform the next decision.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig2-overview.png" data-figure-zoom aria-label="Enlarge figure: Overview of DynaFlow">Enlarge figure ↗</a></div>
+        </figure>
+      <div class="metrics"><div><strong>88.1<span>%</span></strong><span>Overall accuracy · 688 questions</span></div><div><strong>+10.9</strong><span>Points over the strongest baseline</span></div><div><strong>47<span>%</span></strong><span>Answered without a workflow, −0.14 pts</span></div></div>
+      <p class="metric-note">Qwen3.5-27B throughout · six benchmarks · <a href="#results">Explore the results ↓</a></p>
+    </section>
+
+    <section class="section tinted" id="introduction"><div class="prose container"><div class="section-kicker">INTRODUCTION</div><h2>Collaboration should fit the task.</h2><p>Different tasks need different collaboration: some are best answered directly, others need parallel exploration or ordered reasoning and verification. <strong>DynaFlow lets the Main Agent design its own collaboration</strong>, deciding when a workflow is worth it and writing a task-specific program that defines roles, dependencies, information exchange, and checks.</p></div></section>
+
+    <section class="section container" id="method"><div class="section-kicker">METHOD</div><h2>A workflow is an action.</h2><p class="section-lead">The Main Agent writes, runs, and revises a program for each collaboration.</p><div class="method-grid"><article><span class="step-number">01</span><h3>Choose & synthesize</h3><p>Answer directly, call a tool, or write a JavaScript workflow.</p></article><article><span class="step-number">02</span><h3>Execute & exchange</h3><p>Run sub-agents in sequence or in parallel and pass outputs to the agents that need them.</p></article><article><span class="step-number">03</span><h3>Observe & adapt</h3><p>Read the outputs and trace, then answer or launch a follow-up workflow.</p></article><article><span class="step-number">04</span><h3>Train the orchestrator</h3><p>Two-stage SFT trains only the Main Agent; sub-agents stay frozen.</p></article></div>
+      
+      
+    </section>
+
+
+
+    <section class="section tinted" id="cases"><div class="container">
+      <div class="section-kicker">CASE STUDIES</div>
+      <h2>Inside the workflows.</h2>
+      <p class="section-lead">Base and DynaFlow workflows on the same question, with the same frozen sub-agents.</p>
+      <div class="case-tabs" role="tablist" aria-label="Recorded workflow cases" hidden><button id="tab-aime2026" role="tab" data-case="aime2026" aria-selected="true" aria-controls="case-aime2026" tabindex="0">AIME 2026</button><button id="tab-gpqa" role="tab" data-case="gpqa" aria-selected="false" aria-controls="case-gpqa" tabindex="-1">GPQA-Diamond</button><button id="tab-hotpotqa" role="tab" data-case="hotpotqa" aria-selected="false" aria-controls="case-hotpotqa" tabindex="-1">HotpotQA</button><button id="tab-aime2025" role="tab" data-case="aime2025" aria-selected="false" aria-controls="case-aime2025" tabindex="-1">AIME 2025</button></div>
+        <article class="case-panel recorded-case" id="case-aime2026" role="tabpanel" aria-labelledby="tab-aime2026" tabindex="0">
+          <div class="case-heading"><span class="case-label">MATHEMATICS</span></div>
+          <h3>Three methods. One independent check.</h3>
+          <p class="case-question"><strong>Task.</strong> Count palindromes with nonzero digits whose digit sum is 13.</p>
+          <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/case-aime2026.png" data-figure-zoom aria-label="Enlarge figure: AIME 2026: palindrome counting"><img src="assets/paper/case-aime2026.png" width="2200" height="1379" loading="lazy" decoding="async" alt="Base uses one palindrome solver; DynaFlow combines three parallel counting methods and a verifier."></a>
+          <figcaption><strong>AIME 2026: palindrome counting.</strong> One solver versus three complementary computations feeding a verifier.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/case-aime2026.png" data-figure-zoom aria-label="Enlarge figure: AIME 2026: palindrome counting">Enlarge figure ↗</a></div>
+        </figure>
+          <p class="mobile-hint">Tap the figure to enlarge.</p>
+          <div class="case-observation"><h4>Outcome</h4><p>Base returns 59 after an arithmetic error. DynaFlow’s three solvers and verifier all obtain the correct 62.</p></div>
+          
+        </article>
+        <article class="case-panel recorded-case" id="case-gpqa" role="tabpanel" aria-labelledby="tab-gpqa" tabindex="0">
+          <div class="case-heading"><span class="case-label">SCIENCE</span></div>
+          <h3>Keep the evidence alongside the objections.</h3>
+          <p class="case-question"><strong>Task.</strong> Identify the products of reactions A and B and choose the matching answer option.</p>
+          <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/case-gpqa.png" data-figure-zoom aria-label="Enlarge figure: GPQA-Diamond: reaction-product identification"><img src="assets/paper/case-gpqa.png" width="2200" height="1650" loading="lazy" decoding="async" alt="Four chemistry researchers, two checks and a decision agent, compared with two sequential Base calls."></a>
+          <figcaption><strong>GPQA-Diamond: reaction-product identification.</strong> Research evidence and verification results both reach the decision agent.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/case-gpqa.png" data-figure-zoom aria-label="Enlarge figure: GPQA-Diamond: reaction-product identification">Enlarge figure ↗</a></div>
+        </figure>
+          <p class="mobile-hint">Tap the figure to enlarge.</p>
+          <div class="case-observation"><h4>Outcome</h4><p>Base runs two unconnected analyses. DynaFlow’s checks challenge the first candidates, and the decision agent weighs research and objections together.</p></div>
+        </article>
+        <article class="case-panel recorded-case" id="case-hotpotqa" role="tabpanel" aria-labelledby="tab-hotpotqa" tabindex="0">
+          <div class="case-heading"><span class="case-label">MULTI-HOP RETRIEVAL</span></div>
+          <h3>Pass entities and sources to the next search.</h3>
+          <p class="case-question"><strong>Task.</strong> Identify the person associated with an investment description, then retrieve the year requested by the question.</p>
+          <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/case-hotpotqa.png" data-figure-zoom aria-label="Enlarge figure: HotpotQA: person identification and year retrieval"><img src="assets/paper/case-hotpotqa.png" width="2200" height="1889" loading="lazy" decoding="async" alt="Three retrieval routes, candidate ranking, two resolution calls and two checks, with invalid outputs marked."></a>
+          <figcaption><strong>HotpotQA: person identification and year retrieval.</strong> Candidate identification feeds targeted resolution; starred calls returned no valid output.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/case-hotpotqa.png" data-figure-zoom aria-label="Enlarge figure: HotpotQA: person identification and year retrieval">Enlarge figure ↗</a></div>
+        </figure>
+          <p class="mobile-hint">Tap the figure to enlarge.</p>
+          <div class="case-observation"><h4>Outcome</h4><p>Base searches for firms and founding years. DynaFlow identifies candidate people first, then retrieves the year for each.</p></div>
+        </article>
+        <article class="case-panel recorded-case" id="case-aime2025" role="tabpanel" aria-labelledby="tab-aime2025" tabindex="0">
+          <div class="case-heading"><span class="case-label">GEOMETRY</span></div>
+          <h3>Connect optimization to independent audits.</h3>
+          <p class="case-question"><strong>Task.</strong> Minimize the sum of distances to five pentagon vertices and recover m + n + p from the minimum m + n√p.</p>
+          <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/case-aime2025.png" data-figure-zoom aria-label="Enlarge figure: AIME 2025: geometric optimization"><img src="assets/paper/case-aime2025.png" width="2200" height="2219" loading="lazy" decoding="async" alt="Geometry reconstruction, parallel optimization, expression fitting, two audits and an unexecuted repair branch."></a>
+          <figcaption><strong>AIME 2025: geometric optimization.</strong> Construction, parallel optimization, fitting, and audits linked by intermediate outputs.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/case-aime2025.png" data-figure-zoom aria-label="Enlarge figure: AIME 2025: geometric optimization">Enlarge figure ↗</a></div>
+        </figure>
+          <p class="mobile-hint">Tap the figure to enlarge.</p>
+          <div class="case-observation"><h4>Outcome</h4><p>One optimizer fails and is filtered out; both audits confirm the fitted answer, so the repair branch never runs.</p></div>
+        </article>
+    </div></section>
+
+    <section class="section container" id="results"><div class="section-kicker">EXPERIMENTAL RESULTS</div><h2>Best overall accuracy in both modes.</h2><p class="section-lead">Same Qwen3.5-27B backbone, frozen sub-agents, tools, and runtime throughout.</p>
+      <div class="results-highlights"><div><strong>+10.9</strong><span>vs. Self-Refine, the strongest baseline</span></div><div><strong>+11.6</strong><span>vs. AFlow</span></div><div><strong>+12.2</strong><span>vs. the same Main Agent before training</span></div></div>
+      <div class="results-toolbar"><div class="segmented" role="group" aria-label="Result display"><button data-format="percent" aria-pressed="true">Accuracy %</button><button data-format="count" aria-pressed="false">Correct / total</button></div></div><p class="mobile-hint table-hint">Swipe the table sideways to see all benchmarks.</p><div class="table-scroll" tabindex="0" aria-label="Results table; scroll horizontally on small screens"><table id="results-table"><caption class="visually-hidden">Main results. Overall is micro-averaged over all 688 questions; runs without a valid final answer count as incorrect.</caption><thead><tr><th scope="col">Method</th><th scope="col">AIME ’24<br><small>30</small></th><th scope="col">AIME ’25<br><small>30</small></th><th scope="col">AIME ’26<br><small>30</small></th><th scope="col">PolyMATH<br><small>200</small></th><th scope="col">GPQA-D<br><small>198</small></th><th scope="col">HotpotQA<br><small>200</small></th><th scope="col">Overall<br><small>688</small></th></tr></thead><tbody id="results-body">
+        <tr class="group-row"><th scope="rowgroup" colspan="8"><span>Single-agent baselines</span></th></tr>
+        <tr><th scope="row">CoT</th><td>96.67</td><td>93.33</td><td>86.67</td><td>83.00</td><td>85.35</td><td>46.50</td><td>74.27</td></tr>
+        <tr><th scope="row">CoT-SC</th><td>90.00</td><td>93.33</td><td>96.67</td><td>84.50</td><td>85.86</td><td>50.50</td><td>76.16</td></tr>
+        <tr><th scope="row">Self-Refine</th><td>96.67</td><td>93.33</td><td>93.33</td><td>87.50</td><td>88.38</td><td>48.00</td><td>77.18</td></tr>
+        <tr class="group-row"><th scope="rowgroup" colspan="8"><span>Automated multi-agent baseline</span></th></tr>
+        <tr><th scope="row">AFlow</th><td>93.33</td><td>96.67</td><td>100.00</td><td>86.00</td><td>87.37</td><td>47.00</td><td>76.45</td></tr>
+        <tr class="group-row"><th scope="rowgroup" colspan="8"><span>Untrained Main Agent</span></th></tr>
+        <tr><th scope="row">Base <small>Direct</small></th><td>93.33</td><td>93.33</td><td>93.33</td><td>74.00</td><td>83.33</td><td>47.50</td><td>71.51</td></tr>
+        <tr><th scope="row">Base + Web search</th><td>83.33</td><td>73.33</td><td>73.33</td><td>66.00</td><td>79.80</td><td>77.50</td><td>74.71</td></tr>
+        <tr><th scope="row">Base <small>Dynamic</small></th><td>63.33</td><td>63.33</td><td>73.33</td><td>64.00</td><td>77.78</td><td>53.00</td><td>65.12</td></tr>
+        <tr><th scope="row">Base <small>Forced</small></th><td>76.67</td><td>70.00</td><td>70.00</td><td>70.00</td><td>77.78</td><td>81.50</td><td>75.87</td></tr>
+        <tr class="group-row"><th scope="rowgroup" colspan="8"><span>Trained Main Agent (ours)</span></th></tr>
+        <tr class="highlight subdued"><th scope="row">DynaFlow <small>Direct</small></th><td>93.33</td><td>90.00</td><td>90.00</td><td>87.00</td><td>86.87</td><td>51.50</td><td>77.18</td></tr>
+        <tr class="highlight"><th scope="row">DynaFlow <small>Dynamic</small></th><td>93.33</td><td>100.00</td><td>96.67</td><td>91.50</td><td>83.84</td><td>84.50</td><td>87.94</td></tr>
+        <tr class="highlight"><th scope="row">DynaFlow <small>Forced</small></th><td>100.00</td><td>100.00</td><td>100.00</td><td>90.50</td><td>84.85</td><td>83.50</td><td>88.08</td></tr>
+      </tbody></table></div><p class="figure-note">Overall is micro-averaged over 688 questions. Only Base + Web search and the workflow settings have retrieval, so HotpotQA is not a like-for-like comparison with single-agent baselines.</p>
+      <div class="results-figures">
+        <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig1-accuracy-vs-roles.png" data-figure-zoom aria-label="Enlarge figure: Overall accuracy versus collaboration size"><img src="assets/paper/fig1-accuracy-vs-roles.png" width="2200" height="1526" loading="lazy" decoding="async" alt="Line chart of overall accuracy against agent roles per question. DynaFlow rises from 77.2% (Direct, 1 role) to 87.9% (Dynamic, 3.44 roles) and 88.1% (Forced, about 5.2 roles); Base drops from 71.5% Direct to 65.1% Dynamic and reaches 75.9% Forced; baselines sit between 74% and 77%."></a>
+          <figcaption><strong>Overall accuracy versus collaboration size.</strong> More agents alone do not help. DynaFlow, Dynamic reaches 87.9% with 3.44 roles per question and answers 47% of questions without a workflow.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig1-accuracy-vs-roles.png" data-figure-zoom aria-label="Enlarge figure: Overall accuracy versus collaboration size">Enlarge figure ↗</a></div>
+        </figure>
+        <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig3-forced-vs-direct.png" data-figure-zoom aria-label="Enlarge figure: Workflows help only after training"><img src="assets/paper/fig3-forced-vs-direct.png" width="2200" height="834" loading="lazy" decoding="async" alt="Bar chart of accuracy change versus Base, Direct per benchmark for Base, Stage 1 and DynaFlow in Forced mode, with Base plus web search as diamonds. Base, Forced loses 4 to 23 points except on HotpotQA; Stage 1 and DynaFlow gain on all six."></a>
+          <figcaption><strong>Workflows help only after training.</strong> Change versus Base, Direct. Untrained workflows hurt everywhere except HotpotQA; trained ones help on all six benchmarks.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig3-forced-vs-direct.png" data-figure-zoom aria-label="Enlarge figure: Workflows help only after training">Enlarge figure ↗</a></div>
+        </figure>
+      </div>
+    </section>
+
+
+
+    <section class="section tinted" id="analysis"><div class="container">
+      <div class="section-kicker">WORKFLOW ANALYSIS</div>
+      <h2>How the programs use information.</h2>
+      <p class="section-lead">First workflows under Forced execution, before and after training.</p>
+      <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="Workflow analysis figures">
+        <div class="carousel-controls" hidden>
+          <button type="button" class="carousel-arrow" data-dir="-1" aria-label="Previous figure">←</button>
+          <div class="carousel-tabs" role="group" aria-label="Choose a figure"><button type="button" data-slide="0" aria-controls="analysis-structure" aria-pressed="true">Structure</button><button type="button" data-slide="1" aria-controls="analysis-quality" aria-pressed="false">Design quality</button><button type="button" data-slide="2" aria-controls="analysis-roles" aria-pressed="false">Roles</button></div>
+          <button type="button" class="carousel-arrow" data-dir="1" aria-label="Next figure">→</button>
+        </div>
+        <div class="carousel-track" tabindex="0" aria-live="polite">
+      <div class="analysis-block carousel-slide" id="analysis-structure" role="group" aria-roledescription="slide" aria-label="1 of 3: Structure"><h3>Structure and information use</h3><p>Hybrid parallel-and-sequential programs rise from <strong>3.4%</strong> to <strong>85.6%</strong>, and 97.7% use upstream outputs explicitly.</p>
+<figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig5-workflow-structure.png" data-figure-zoom aria-label="Enlarge figure: Workflow structure and information use across stages"><img src="assets/paper/fig5-workflow-structure.png" width="2200" height="1339" loading="lazy" decoding="async" alt="Six heatmaps comparing Base, Stage 1 and Stage 2 workflow programs on execution structure, role specialization, dependency pattern, output reuse, aggregation strategy and sub-agent count."></a>
+          <figcaption><strong>Workflow structure and information use across stages.</strong> Six structural properties of Base, Stage 1, and Stage 2 programs.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig5-workflow-structure.png" data-figure-zoom aria-label="Enlarge figure: Workflow structure and information use across stages">Enlarge figure ↗</a></div>
+        </figure>
+      </div><div class="analysis-block carousel-slide" id="analysis-quality" role="group" aria-roledescription="slide" aria-label="2 of 3: Design quality"><h3>Workflow design quality</h3><p>Stage 2 curation halves major information-flow defects (1.9% → 0.9%) while using fewer sub-agents.</p>
+<figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig4-design-quality.png" data-figure-zoom aria-label="Enlarge figure: Workflow design quality"><img src="assets/paper/fig4-design-quality.png" width="2200" height="1077" loading="lazy" decoding="async" alt="Stacked bars of judge scores for Base, Stage 1 and Stage 2 on task consistency, decomposition appropriateness, logical continuity and information-flow correctness."></a>
+          <figcaption><strong>Workflow design quality.</strong> Judge scores: 0 = major defect, 1 = minor weakness, 2 = no defect.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig4-design-quality.png" data-figure-zoom aria-label="Enlarge figure: Workflow design quality">Enlarge figure ↗</a></div>
+        </figure>
+      </div><div class="analysis-block carousel-slide" id="analysis-roles" role="group" aria-roledescription="slide" aria-label="3 of 3: Roles"><h3>Roles adapt to the task</h3><p>Solvers and verifiers dominate math; researchers make up 59.6% of HotpotQA sub-agents.</p>
+<figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig6-role-allocation.png" data-figure-zoom aria-label="Enlarge figure: Task-specific role allocation"><img src="assets/paper/fig6-role-allocation.png" width="2200" height="652" loading="lazy" decoding="async" alt="Four pie charts of sub-agent roles: AIME 49.7% solver and 43.9% verifier; PolyMATH 46.8% solver and 43.3% verifier; GPQA-Diamond 41.6% solver, 34.6% verifier, 15.7% researcher; HotpotQA 59.6% researcher and 33.2% verifier."></a>
+          <figcaption><strong>Task-specific role allocation.</strong> Share of executed sub-agent nodes by role; AIME years pooled.</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig6-role-allocation.png" data-figure-zoom aria-label="Enlarge figure: Task-specific role allocation">Enlarge figure ↗</a></div>
+        </figure>
+      </div>
+        </div>
+        <p class="carousel-hint" hidden>Use ← → keys or swipe to switch figures.</p>
+      </div>
+    </div></section>
+
+    <section class="section" id="code">
+      <div class="container">
+        <div class="section-kicker">CODE</div>
+        <div class="runtime-heading"><h2>Three ways to run.</h2></div>
+        <div class="runtime-modes">
+          <article><h3>Direct</h3><p>The Main Agent answers without tools.</p></article>
+          <article><h3>Dynamic</h3><p>The Main Agent decides when a workflow will help.</p></article>
+          <article><h3>Forced</h3><p>Every task runs through a workflow.</p></article>
+        </div>
+        <div class="code-panel code-single"><pre tabindex="0" aria-label="Run command"><code>python scripts/dynaflow.py demo --mode dynamic</code></pre></div>
+        <p class="runtime-note">Setup instructions are in the repository README.</p>
+      </div>
+    </section>
+
+    <section class="section tinted citation-section" id="citation">
+      <div class="container citation-inner">
+        <div class="citation-heading"><h2>Citation</h2><button id="copy-citation" class="copy-button" type="button"><svg class="resource-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg> Copy BibTeX</button></div>
+        <p class="citation-note">Publication details will be added when available.</p>
+        <pre class="bibtex" tabindex="0" aria-label="BibTeX citation"><code id="citation-text">@misc{dynaflow,
+  title = {DynaFlow: Learning Free-Form Multi-Agent Orchestration},
+  note  = {Manuscript in preparation}
+}</code></pre>
+        <p id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+  <dialog id="figure-viewer" aria-labelledby="figure-viewer-title">
+    <div class="figure-viewer-header"><h2 id="figure-viewer-title">Paper figure</h2><div class="figure-viewer-controls"><button id="figure-scale" type="button" aria-pressed="false">Zoom to original</button><a id="figure-original" href="assets/paper/fig2-overview.png" target="_blank" rel="noopener">Open image ↗</a><button id="figure-close" class="close-button" type="button" aria-label="Close figure">×</button></div></div>
+    <div class="figure-viewport" tabindex="0" aria-label="Enlarged paper figure; scroll to inspect details"><img id="figure-viewer-image" alt="" src="assets/paper/fig2-overview.png"></div>
+    <p class="figure-viewer-hint">Use “Zoom to original” for small labels. Scroll to inspect; press Escape to close.</p>
+  </dialog>
+  <footer><div class="container"><a class="wordmark" href="#top"><img src="assets/logo.svg" alt="" width="24" height="24">DynaFlow</a><p>Learning Free-Form Multi-Agent Orchestration</p><p class="footer-lang"><a href="index.html" lang="en" hreflang="en" aria-current="page" data-lang-link>English</a> · <a href="zh.html" lang="zh-CN" hreflang="zh-CN" data-lang-link>中文</a></p><a class="back-top" href="#top">Back to top ↑</a></div></footer>
+</body>
+</html>
+

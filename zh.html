@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="DynaFlow：学习自由形式的多智能体编排。主智能体按任务编写并执行多智能体工作流。">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="DynaFlow: Learning Free-Form Multi-Agent Orchestration">
+  <meta property="og:description" content="主智能体学习何时、如何以代码形式编写多智能体工作流。基于 Qwen3.5-27B，在六个基准上总体准确率 88.1%，比最强基线高 10.9 个百分点。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://amiya-special.github.io/DynaFlow-website/zh.html">
+  <meta property="og:image" content="https://amiya-special.github.io/DynaFlow-website/assets/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" hreflang="en" href="index.html">
+  <link rel="alternate" hreflang="zh-CN" href="zh.html">
+  <title>DynaFlow · 学习自由形式的多智能体编排</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="assets/fonts/local-fonts.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/editorial.css">
+  <script defer src="assets/config.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#introduction">跳到正文</a>
+  <header class="topbar">
+    <a class="wordmark" href="#top"><img src="assets/logo.svg" alt="" width="25" height="25">DynaFlow</a>
+    <nav aria-label="Main navigation"><a href="#method">方法</a><a href="#cases">案例</a><a href="#results">结果</a><a href="#code">代码</a></nav>
+    <div class="lang-toggle" role="group" aria-label="语言"><a href="index.html" lang="en" hreflang="en" data-lang-link>EN</a><a href="zh.html" lang="zh-CN" hreflang="zh-CN" aria-current="page" data-lang-link>中文</a></div>
+    <button class="menu-button" id="menu-toggle" aria-label="打开目录" aria-controls="contents" aria-expanded="false">☰</button>
+  </header>
+  <dialog id="contents" aria-labelledby="contents-title"><div class="dialog-head"><h2 id="contents-title">本页目录</h2><button class="close-button" id="menu-close" aria-label="关闭目录">×</button></div><nav aria-label="Table of contents"><a href="#introduction">简介</a><a href="#method">DynaFlow 框架</a><a href="#cases">案例分析</a><a href="#results">实验结果</a><a href="#analysis">工作流分析</a><a href="#code">代码</a><a href="#citation" data-citation-link>引用</a><a href="index.html" lang="en" hreflang="en" data-lang-link>English</a></nav></dialog>
+  <main id="top">
+    <section class="hero container">
+      <div class="eyebrow">动态多智能体工作流</div>
+      <h1><img src="assets/logo.svg" alt="" width="80" height="80"><span>Dyna<span class="accent">Flow</span></span></h1>
+      <h2 class="subtitle" id="project-subtitle">学习自由形式的<br>多智能体编排</h2>
+      <p class="authors" id="project-authors" hidden></p>
+      <p class="affiliations" id="project-affiliations" hidden></p>
+      <p class="hero-summary">按任务设计的协作。<br><span>以代码生成、执行并迭代多智能体工作流。</span></p>
+      <div class="resource-links" aria-label="项目资源">
+        <a class="resource resource-public" data-resource="github" href="https://github.com/amiya-special/Dynaflow" target="_blank" rel="noopener noreferrer"><svg class="resource-icon brand-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg> GitHub</a>
+        <a class="resource resource-public" data-resource="arxiv" role="link" aria-disabled="true"><svg class="resource-icon brand-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3.8423 0a1.0037 1.0037 0 0 0-.922.6078c-.1536.3687-.0438.6275.2938 1.1113l6.9185 8.3597-1.0223 1.1058a1.0393 1.0393 0 0 0 .003 1.4229l1.2292 1.3135-5.4391 6.4444c-.2803.299-.4538.823-.2971 1.1986a1.0253 1.0253 0 0 0 .9585.635.9133.9133 0 0 0 .6891-.3405l5.783-6.126 7.4902 8.0051a.8527.8527 0 0 0 .6835.2597.9575.9575 0 0 0 .8777-.6138c.1577-.377-.017-.7502-.306-1.1407l-7.0518-8.3418 1.0632-1.13a.9626.9626 0 0 0 .0089-1.3165L4.6336.4639s-.3733-.4535-.768-.463zm0 .272h.0166c.2179.0052.4874.2715.5644.3639l.005.006.0052.0055 10.169 10.9905a.6915.6915 0 0 1-.0072.945l-1.0666 1.133-1.4982-1.7724-8.5994-10.39c-.3286-.472-.352-.6183-.2592-.841a.7307.7307 0 0 1 .6704-.4401Zm14.341 1.5701a.877.877 0 0 0-.6554.2418l-5.6962 6.1584 1.6944 1.8319 5.3089-6.5138c.3251-.4335.479-.6603.3247-1.0292a1.1205 1.1205 0 0 0-.9763-.689zm-7.6557 12.2823 1.3186 1.4135-5.7864 6.1295a.6494.6494 0 0 1-.4959.26.7516.7516 0 0 1-.706-.4669c-.1119-.2682.0359-.6864.2442-.9083l.0051-.0055.0047-.0055z"/></svg> arXiv <small>即将发布</small></a>
+        <a class="resource resource-primary" href="#code"><svg class="resource-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/></svg> 代码</a>
+        <a class="resource" href="#cases"><svg class="resource-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> 案例</a>
+        <a class="resource" href="#citation" data-citation-link><svg class="resource-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 5H4v7h5c0 4-2 6-5 7m16-14h-6v7h5c0 4-2 6-5 7"/></svg> 引用</a>
+      </div>
+      <figure class="paper-figure hero-paper-figure">
+          <a class="figure-open" href="assets/paper/fig2-overview.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/fig2-overview.png" width="2200" height="792" loading="eager" decoding="async" alt="DynaFlow 总览：两阶段 SFT 训练主智能体；主智能体选择直接作答、调用工具或编写 JavaScript 工作流；冻结子智能体执行研究、推理与验证；结果回传用于下一步决策。"></a>
+          <figcaption><strong>DynaFlow 总览。</strong>只训练主智能体。它可以直接作答、调用工具或编写 JavaScript 工作流；冻结的子智能体执行工作流，输出与执行轨迹再用于下一步决策。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig2-overview.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+      <div class="metrics"><div><strong>88.1<span>%</span></strong><span>总体准确率 · 688 题</span></div><div><strong>+10.9</strong><span>比最强基线高（百分点）</span></div><div><strong>47<span>%</span></strong><span>无需工作流直接作答，仅 −0.14 分</span></div></div>
+      <p class="metric-note">全部基于 Qwen3.5-27B · 六个基准 · <a href="#results">查看结果 ↓</a></p>
+    </section>
+
+    <section class="section tinted" id="introduction"><div class="prose container"><div class="section-kicker">简介</div><h2>协作应当适配任务。</h2><p>不同任务需要不同的协作方式：有的直接作答最好，有的需要并行探索，有的需要按序推理与验证。<strong>DynaFlow 让主智能体自己设计协作</strong>：判断何时值得调用工作流，并为当前任务编写程序，定义角色、依赖、信息传递与校验。</p></div></section>
+
+    <section class="section container" id="method"><div class="section-kicker">方法</div><h2>工作流即动作。</h2><p class="section-lead">主智能体为每次协作编写、运行并修订一段程序。</p><div class="method-grid"><article><span class="step-number">01</span><h3>选择与生成</h3><p>直接作答、调用工具，或编写 JavaScript 工作流。</p></article><article><span class="step-number">02</span><h3>执行与传递</h3><p>串行或并行运行子智能体，把输出传给需要它的智能体。</p></article><article><span class="step-number">03</span><h3>观察与调整</h3><p>读取输出与执行轨迹，然后作答或发起后续工作流。</p></article><article><span class="step-number">04</span><h3>训练编排者</h3><p>两阶段 SFT 只训练主智能体，子智能体保持冻结。</p></article></div>
+      
+      
+    </section>
+
+
+
+    <section class="section tinted" id="cases"><div class="container">
+      <div class="section-kicker">案例分析</div>
+      <h2>工作流内部。</h2>
+      <p class="section-lead">同一道题上 Base 与 DynaFlow 的工作流对比，子智能体相同且冻结。</p>
+      <div class="case-tabs" role="tablist" aria-label="工作流案例" hidden><button id="tab-aime2026" role="tab" data-case="aime2026" aria-selected="true" aria-controls="case-aime2026" tabindex="0">AIME 2026</button><button id="tab-gpqa" role="tab" data-case="gpqa" aria-selected="false" aria-controls="case-gpqa" tabindex="-1">GPQA-Diamond</button><button id="tab-hotpotqa" role="tab" data-case="hotpotqa" aria-selected="false" aria-controls="case-hotpotqa" tabindex="-1">HotpotQA</button><button id="tab-aime2025" role="tab" data-case="aime2025" aria-selected="false" aria-controls="case-aime2025" tabindex="-1">AIME 2025</button></div>
+        <article class="case-panel recorded-case" id="case-aime2026" role="tabpanel" aria-labelledby="tab-aime2026" tabindex="0">
+          <div class="case-heading"><span class="case-label">数学</span></div>
+          <h3>三种方法，一次独立验证。</h3>
+          <p class="case-question"><strong>任务：</strong>统计各位数字非零、数字和为 13 的回文数个数。</p>
+          <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/case-aime2026.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/case-aime2026.png" width="2200" height="1379" loading="lazy" decoding="async" alt="Base 使用单个回文数求解器；DynaFlow 并行运行三种计数方法并交给验证器。"></a>
+          <figcaption><strong>AIME 2026：回文数计数。</strong>单个求解器 vs. 三种互补计算共同交给验证器。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/case-aime2026.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+          <p class="mobile-hint">点击图片可放大。</p>
+          <div class="case-observation"><h4>结果</h4><p>Base 因计算错误得到 59。DynaFlow 的三个求解器与验证器都得到正确答案 62。</p></div>
+          
+        </article>
+        <article class="case-panel recorded-case" id="case-gpqa" role="tabpanel" aria-labelledby="tab-gpqa" tabindex="0">
+          <div class="case-heading"><span class="case-label">科学</span></div>
+          <h3>证据与质疑一并保留。</h3>
+          <p class="case-question"><strong>任务：</strong>确定反应 A 与 B 的产物，并选出对应选项。</p>
+          <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/case-gpqa.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/case-gpqa.png" width="2200" height="1650" loading="lazy" decoding="async" alt="四个化学研究智能体、两次校验与一个决策智能体，对比 Base 的两次串行调用。"></a>
+          <figcaption><strong>GPQA-Diamond：反应产物识别。</strong>研究证据与验证结果同时送达决策智能体。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/case-gpqa.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+          <p class="mobile-hint">点击图片可放大。</p>
+          <div class="case-observation"><h4>结果</h4><p>Base 运行两个互不相连的分析。DynaFlow 的校验对初始候选提出质疑，决策智能体综合研究证据与质疑作出判断。</p></div>
+        </article>
+        <article class="case-panel recorded-case" id="case-hotpotqa" role="tabpanel" aria-labelledby="tab-hotpotqa" tabindex="0">
+          <div class="case-heading"><span class="case-label">多跳检索</span></div>
+          <h3>把实体与来源传给下一步检索。</h3>
+          <p class="case-question"><strong>任务：</strong>根据投资相关描述确定人物，再检索题目所问的年份。</p>
+          <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/case-hotpotqa.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/case-hotpotqa.png" width="2200" height="1889" loading="lazy" decoding="async" alt="三条检索路线、候选排序、两次求解与两次校验，无效输出已标出。"></a>
+          <figcaption><strong>HotpotQA：人物识别与年份检索。</strong>先识别候选人，再逐一定向求解；带星号的调用未返回有效输出。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/case-hotpotqa.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+          <p class="mobile-hint">点击图片可放大。</p>
+          <div class="case-observation"><h4>结果</h4><p>Base 直接搜索公司及其成立年份。DynaFlow 先识别候选人物，再逐一检索对应年份。</p></div>
+        </article>
+        <article class="case-panel recorded-case" id="case-aime2025" role="tabpanel" aria-labelledby="tab-aime2025" tabindex="0">
+          <div class="case-heading"><span class="case-label">几何</span></div>
+          <h3>优化结果交给独立审核。</h3>
+          <p class="case-question"><strong>任务：</strong>求到五边形五个顶点距离之和的最小值 m + n√p，并给出 m + n + p。</p>
+          <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/case-aime2025.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/case-aime2025.png" width="2200" height="2219" loading="lazy" decoding="async" alt="几何构造、并行优化、表达式拟合、两次审核以及未执行的修复分支。"></a>
+          <figcaption><strong>AIME 2025：几何优化。</strong>构造、并行优化、表达式拟合与审核通过中间结果串联。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/case-aime2025.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+          <p class="mobile-hint">点击图片可放大。</p>
+          <div class="case-observation"><h4>结果</h4><p>一个优化器失败并被过滤；两次审核都确认拟合结果，因此修复分支没有触发。</p></div>
+        </article>
+    </div></section>
+
+    <section class="section container" id="results"><div class="section-kicker">实验结果</div><h2>两种模式下总体准确率均为最高。</h2><p class="section-lead">所有设置使用相同的 Qwen3.5-27B 主干、冻结子智能体、工具与运行时。</p>
+      <div class="results-highlights"><div><strong>+10.9</strong><span>对比最强基线 Self-Refine</span></div><div><strong>+11.6</strong><span>对比 AFlow</span></div><div><strong>+12.2</strong><span>对比训练前的同一主智能体</span></div></div>
+      <div class="results-toolbar"><div class="segmented" role="group" aria-label="结果显示方式"><button data-format="percent" aria-pressed="true">准确率 %</button><button data-format="count" aria-pressed="false">答对 / 总数</button></div></div><p class="mobile-hint table-hint">左右滑动表格查看全部基准。</p><div class="table-scroll" tabindex="0" aria-label="结果表；小屏可横向滚动"><table id="results-table"><caption class="visually-hidden">主要结果。总体为全部 688 题的微平均；未给出有效最终答案的运行计为错误。</caption><thead><tr><th scope="col">方法</th><th scope="col">AIME ’24<br><small>30</small></th><th scope="col">AIME ’25<br><small>30</small></th><th scope="col">AIME ’26<br><small>30</small></th><th scope="col">PolyMATH<br><small>200</small></th><th scope="col">GPQA-D<br><small>198</small></th><th scope="col">HotpotQA<br><small>200</small></th><th scope="col">总体<br><small>688</small></th></tr></thead><tbody id="results-body">
+        <tr class="group-row"><th scope="rowgroup" colspan="8"><span>单智能体基线</span></th></tr>
+        <tr><th scope="row">CoT</th><td>96.67</td><td>93.33</td><td>86.67</td><td>83.00</td><td>85.35</td><td>46.50</td><td>74.27</td></tr>
+        <tr><th scope="row">CoT-SC</th><td>90.00</td><td>93.33</td><td>96.67</td><td>84.50</td><td>85.86</td><td>50.50</td><td>76.16</td></tr>
+        <tr><th scope="row">Self-Refine</th><td>96.67</td><td>93.33</td><td>93.33</td><td>87.50</td><td>88.38</td><td>48.00</td><td>77.18</td></tr>
+        <tr class="group-row"><th scope="rowgroup" colspan="8"><span>自动化多智能体基线</span></th></tr>
+        <tr><th scope="row">AFlow</th><td>93.33</td><td>96.67</td><td>100.00</td><td>86.00</td><td>87.37</td><td>47.00</td><td>76.45</td></tr>
+        <tr class="group-row"><th scope="rowgroup" colspan="8"><span>未训练的主智能体</span></th></tr>
+        <tr><th scope="row">Base <small>Direct</small></th><td>93.33</td><td>93.33</td><td>93.33</td><td>74.00</td><td>83.33</td><td>47.50</td><td>71.51</td></tr>
+        <tr><th scope="row">Base + Web search</th><td>83.33</td><td>73.33</td><td>73.33</td><td>66.00</td><td>79.80</td><td>77.50</td><td>74.71</td></tr>
+        <tr><th scope="row">Base <small>Dynamic</small></th><td>63.33</td><td>63.33</td><td>73.33</td><td>64.00</td><td>77.78</td><td>53.00</td><td>65.12</td></tr>
+        <tr><th scope="row">Base <small>Forced</small></th><td>76.67</td><td>70.00</td><td>70.00</td><td>70.00</td><td>77.78</td><td>81.50</td><td>75.87</td></tr>
+        <tr class="group-row"><th scope="rowgroup" colspan="8"><span>训练后的主智能体（本文）</span></th></tr>
+        <tr class="highlight subdued"><th scope="row">DynaFlow <small>Direct</small></th><td>93.33</td><td>90.00</td><td>90.00</td><td>87.00</td><td>86.87</td><td>51.50</td><td>77.18</td></tr>
+        <tr class="highlight"><th scope="row">DynaFlow <small>Dynamic</small></th><td>93.33</td><td>100.00</td><td>96.67</td><td>91.50</td><td>83.84</td><td>84.50</td><td>87.94</td></tr>
+        <tr class="highlight"><th scope="row">DynaFlow <small>Forced</small></th><td>100.00</td><td>100.00</td><td>100.00</td><td>90.50</td><td>84.85</td><td>83.50</td><td>88.08</td></tr>
+      </tbody></table></div><p class="figure-note">总体为 688 题的微平均。只有 Base + Web search 和工作流设置可以检索，因此 HotpotQA 一列与单智能体基线并非同条件对比。</p>
+      <div class="results-figures">
+        <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig1-accuracy-vs-roles.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/fig1-accuracy-vs-roles.png" width="2200" height="1526" loading="lazy" decoding="async" alt="总体准确率与每题智能体角色数的关系：DynaFlow 从 Direct 的 77.2% 升至 Dynamic 87.9% 与 Forced 88.1%；Base 在 65%–76% 之间；各基线在 74%–77% 之间。"></a>
+          <figcaption><strong>总体准确率与协作规模。</strong>单纯增加智能体数量帮助有限。DynaFlow（Dynamic）平均每题 3.44 个角色即达到 87.9%，且 47% 的题目无需工作流。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig1-accuracy-vs-roles.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+        <figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig3-forced-vs-direct.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/fig3-forced-vs-direct.png" width="2200" height="834" loading="lazy" decoding="async" alt="各基准上 Forced 模式相对 Base（Direct）的准确率变化：未训练时除 HotpotQA 外均下降，训练后六个基准全部提升。"></a>
+          <figcaption><strong>工作流只有在训练后才有帮助。</strong>相对 Base（Direct）的准确率变化。未训练时，除 HotpotQA 外工作流均会降分；训练后在六个基准上全部提升。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig3-forced-vs-direct.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+      </div>
+    </section>
+
+
+
+    <section class="section tinted" id="analysis"><div class="container">
+      <div class="section-kicker">工作流分析</div>
+      <h2>程序如何利用信息。</h2>
+      <p class="section-lead">Forced 模式下的首个工作流，训练前后对比。</p>
+      <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="工作流分析图">
+        <div class="carousel-controls" hidden>
+          <button type="button" class="carousel-arrow" data-dir="-1" aria-label="上一张">←</button>
+          <div class="carousel-tabs" role="group" aria-label="选择图"><button type="button" data-slide="0" aria-controls="analysis-structure" aria-pressed="true">结构</button><button type="button" data-slide="1" aria-controls="analysis-quality" aria-pressed="false">设计质量</button><button type="button" data-slide="2" aria-controls="analysis-roles" aria-pressed="false">角色</button></div>
+          <button type="button" class="carousel-arrow" data-dir="1" aria-label="下一张">→</button>
+        </div>
+        <div class="carousel-track" tabindex="0" aria-live="polite">
+      <div class="analysis-block carousel-slide" id="analysis-structure" role="group" aria-roledescription="slide" aria-label="第 1 / 3 张：结构"><h3>结构与信息利用</h3><p>串并结合的混合程序从 <strong>3.4%</strong> 升至 <strong>85.6%</strong>，97.7% 的程序显式利用上游输出。</p>
+<figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig5-workflow-structure.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/fig5-workflow-structure.png" width="2200" height="1339" loading="lazy" decoding="async" alt="六张热力图对比 Base、Stage 1、Stage 2 程序的执行结构、角色分工、依赖模式、输出复用、聚合策略与子智能体数量。"></a>
+          <figcaption><strong>各训练阶段的工作流结构与信息利用。</strong>Base、Stage 1、Stage 2 程序的六项结构属性。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig5-workflow-structure.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+      </div><div class="analysis-block carousel-slide" id="analysis-quality" role="group" aria-roledescription="slide" aria-label="第 2 / 3 张：设计质量"><h3>工作流设计质量</h3><p>Stage 2 数据筛选使严重信息流缺陷减半（1.9% → 0.9%），且使用的子智能体更少。</p>
+<figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig4-design-quality.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/fig4-design-quality.png" width="2200" height="1077" loading="lazy" decoding="async" alt="Base、Stage 1、Stage 2 在任务一致性、分解合理性、逻辑连贯性与信息流正确性上的评分分布。"></a>
+          <figcaption><strong>工作流设计质量。</strong>评审打分：0 = 严重缺陷，1 = 轻微不足，2 = 无缺陷。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig4-design-quality.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+      </div><div class="analysis-block carousel-slide" id="analysis-roles" role="group" aria-roledescription="slide" aria-label="第 3 / 3 张：角色"><h3>角色随任务调整</h3><p>数学题以求解器和验证器为主；HotpotQA 中研究者占子智能体的 59.6%。</p>
+<figure class="paper-figure">
+          <a class="figure-open" href="assets/paper/fig6-role-allocation.png" data-figure-zoom aria-label="放大查看图片"><img src="assets/paper/fig6-role-allocation.png" width="2200" height="652" loading="lazy" decoding="async" alt="各基准的子智能体角色饼图：数学以求解器和验证器为主，HotpotQA 以研究者为主，GPQA-Diamond 介于两者之间。"></a>
+          <figcaption><strong>随任务变化的角色分配。</strong>按角色统计的已执行子智能体节点占比；三届 AIME 合并统计。</figcaption>
+          <div class="figure-actions"><a href="assets/paper/fig6-role-allocation.png" data-figure-zoom aria-label="放大查看图片">放大查看 ↗</a></div>
+        </figure>
+      </div>
+        </div>
+        <p class="carousel-hint" hidden>用 ← → 键或左右滑动切换。</p>
+      </div>
+    </div></section>
+
+    <section class="section" id="code">
+      <div class="container">
+        <div class="section-kicker">代码</div>
+        <div class="runtime-heading"><h2>三种运行模式。</h2></div>
+        <div class="runtime-modes">
+          <article><h3>Direct</h3><p>主智能体不使用工具，直接作答。</p></article>
+          <article><h3>Dynamic</h3><p>主智能体自行判断何时调用工作流。</p></article>
+          <article><h3>Forced</h3><p>每个任务都通过工作流完成。</p></article>
+        </div>
+        <div class="code-panel code-single"><pre tabindex="0" aria-label="运行命令"><code>python scripts/dynaflow.py demo --mode dynamic</code></pre></div>
+        <p class="runtime-note">环境配置请参见代码仓库的 README。</p>
+      </div>
+    </section>
+
+    <section class="section tinted citation-section" id="citation">
+      <div class="container citation-inner">
+        <div class="citation-heading"><h2>引用</h2><button id="copy-citation" class="copy-button" type="button"><svg class="resource-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg> 复制 BibTeX</button></div>
+        <p class="citation-note">发表信息确定后更新。</p>
+        <pre class="bibtex" tabindex="0" aria-label="BibTeX 引用"><code id="citation-text">@misc{dynaflow,
+  title = {DynaFlow: Learning Free-Form Multi-Agent Orchestration},
+  note  = {Manuscript in preparation}
+}</code></pre>
+        <p id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+  <dialog id="figure-viewer" aria-labelledby="figure-viewer-title">
+    <div class="figure-viewer-header"><h2 id="figure-viewer-title">论文插图</h2><div class="figure-viewer-controls"><button id="figure-scale" type="button" aria-pressed="false">原始尺寸</button><a id="figure-original" href="assets/paper/fig2-overview.png" target="_blank" rel="noopener">新窗口打开 ↗</a><button id="figure-close" class="close-button" type="button" aria-label="关闭">×</button></div></div>
+    <div class="figure-viewport" tabindex="0" aria-label="放大的论文插图，可滚动查看细节"><img id="figure-viewer-image" alt="" src="assets/paper/fig2-overview.png"></div>
+    <p class="figure-viewer-hint">小字可点“原始尺寸”查看；滚动浏览，按 Esc 关闭。</p>
+  </dialog>
+  <footer><div class="container"><a class="wordmark" href="#top"><img src="assets/logo.svg" alt="" width="24" height="24">DynaFlow</a><p>学习自由形式的多智能体编排</p><p class="footer-lang"><a href="index.html" lang="en" hreflang="en" data-lang-link>English</a> · <a href="zh.html" lang="zh-CN" hreflang="zh-CN" aria-current="page" data-lang-link>中文</a></p><a class="back-top" href="#top">回到顶部 ↑</a></div></footer>
+</body>
+</html>
+
