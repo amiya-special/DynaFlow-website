@@ -324,4 +324,4 @@ tbody tr.highlight.subdued td:last-child { color: inherit; font-weight: inherit;
 :lang(zh) h2, :lang(zh) h3, :lang(zh) .subtitle { letter-spacing: 0; }
 :lang(zh) .section-kicker, :lang(zh) .eyebrow, :lang(zh) .case-label { letter-spacing: 3px; }
 :lang(zh) p, :lang(zh) figcaption { text-align: justify; }
-:lang(zh) .section-lead, :lang(zh) .hero-summary, :lang(zh) .carousel.is-ready .analysis-block>p, :lang(zh) .metric-note, :lang(zh) .mobile-hint, :lang(zh) .carousel-hint { text-align: center; }
+:lang(zh) .authors, :lang(zh) .section-lead, :lang(zh) .hero-summary, :lang(zh) .carousel.is-ready .analysis-block>p, :lang(zh) .metric-note, :lang(zh) .mobile-hint, :lang(zh) .carousel-hint { text-align: center; }
