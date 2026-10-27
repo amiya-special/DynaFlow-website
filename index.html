@@ -195,11 +195,13 @@
         <div class="section-kicker">CODE</div>
         <div class="runtime-heading"><h2>Three ways to run.</h2></div>
         <div class="runtime-modes">
-          <article><h3>Direct</h3><p>The Main Agent answers without tools.</p></article>
+          <article><h3>Direct</h3><p>The Main Agent answers without invoking a workflow.</p></article>
           <article><h3>Dynamic</h3><p>The Main Agent decides when a workflow will help.</p></article>
           <article><h3>Forced</h3><p>Every task runs through a workflow.</p></article>
         </div>
-        <div class="code-panel code-single"><pre tabindex="0" aria-label="Run command"><code>python scripts/dynaflow.py demo --mode dynamic</code></pre></div>
+        <div class="code-panel code-single"><pre tabindex="0" aria-label="Run command"><code>python scripts/dynaflow.py demo --mode direct
+python scripts/dynaflow.py demo --mode dynamic
+python scripts/dynaflow.py demo --mode forced</code></pre></div>
         <p class="runtime-note">Setup instructions are in the repository README.</p>
       </div>
     </section>

@@ -195,11 +195,13 @@
         <div class="section-kicker">代码</div>
         <div class="runtime-heading"><h2>三种运行模式。</h2></div>
         <div class="runtime-modes">
-          <article><h3>Direct</h3><p>主智能体不使用工具，直接作答。</p></article>
+          <article><h3>Direct</h3><p>主智能体不调用工作流作答。</p></article>
           <article><h3>Dynamic</h3><p>主智能体自行判断何时调用工作流。</p></article>
           <article><h3>Forced</h3><p>每个任务都通过工作流完成。</p></article>
         </div>
-        <div class="code-panel code-single"><pre tabindex="0" aria-label="运行命令"><code>python scripts/dynaflow.py demo --mode dynamic</code></pre></div>
+        <div class="code-panel code-single"><pre tabindex="0" aria-label="运行命令"><code>python scripts/dynaflow.py demo --mode direct
+python scripts/dynaflow.py demo --mode dynamic
+python scripts/dynaflow.py demo --mode forced</code></pre></div>
         <p class="runtime-note">环境配置请参见代码仓库的 README。</p>
       </div>
     </section>
